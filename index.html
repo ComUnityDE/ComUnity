@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ComUnity - SDR Team Aufbau & Vertriebsführung</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #0066cc;
+            --primary-dark: #004c99;
+            --secondary-color: #00a8e8;
+            --accent-color: #ff6b35;
+            --text-dark: #1a1a1a;
+            --text-light: #666;
+            --bg-light: #f8f9fa;
+            --white: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--white);
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            box-shadow: var(--shadow-lg);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cta-btn {
+            background: var(--primary-color);
+            color: var(--white) !important;
+            padding: 0.7rem 1.5rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .cta-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .cta-btn::after {
+            display: none;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: var(--white);
+            padding: 150px 2rem 100px;
+            margin-top: 70px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            background: var(--white);
+            color: var(--primary-color);
+            padding: 1rem 2.5rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Zielgruppe Section */
+        .zielgruppe {
+            padding: 80px 2rem;
+            background: var(--bg-light);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 3rem;
+        }
+
+        .checkmark-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .checkmark-item {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .checkmark-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .checkmark-item::before {
+            content: '✓';
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: var(--primary-color);
+            color: var(--white);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 1rem;
+            font-weight: bold;
+        }
+
+        /* Pakete Section */
+        .pakete {
+            padding: 80px 2rem;
+            background: var(--white);
+        }
+
+        .pakete-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .paket-card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .paket-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-color);
+            box-shadow: 0 20px 50px rgba(0, 102, 204, 0.2);
+        }
+
+        .paket-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            padding: 2.5rem 2rem;
+            text-align: center;
+        }
+
+        .paket-header h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .paket-header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .paket-body {
+            padding: 2.5rem;
+        }
+
+        .paket-section {
+            margin-bottom: 2rem;
+        }
+
+        .paket-section h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .paket-section h4::before {
+            content: '→';
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .paket-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .paket-list li {
+            padding: 0.7rem 0;
+            padding-left: 2rem;
+            position: relative;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .paket-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0.5rem;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .paket-highlight {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-color);
+            margin-top: 1.5rem;
+        }
+
+        .paket-highlight strong {
+            color: var(--primary-color);
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .paket-cta {
+            display: block;
+            text-align: center;
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 1rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            margin-top: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .paket-cta:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Vergleich Section */
+        .vergleich {
+            padding: 80px 2rem;
+            background: var(--bg-light);
+        }
+
+        .comparison-table {
+            max-width: 900px;
+            margin: 3rem auto;
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .comparison-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .comparison-table th {
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 1.5rem;
+            font-weight: 600;
+            text-align: left;
+        }
+
+        .comparison-table td {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:hover {
+            background: var(--bg-light);
+        }
+
+        .comparison-table td:first-child {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        /* Workflow Section */
+        .workflow {
+            padding: 80px 2rem;
+            background: var(--white);
+        }
+
+        .workflow-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .workflow-step {
+            text-align: center;
+            padding: 2rem;
+            background: var(--bg-light);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .workflow-step:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .workflow-number {
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            background: var(--primary-color);
+            color: var(--white);
+            border-radius: 50%;
+            font-size: 1.8rem;
+            font-weight: bold;
+            line-height: 60px;
+            margin-bottom: 1rem;
+        }
+
+        .workflow-step h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        /* Warum Section */
+        .warum {
+            padding: 80px 2rem;
+            background: var(--bg-light);
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .benefit-card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .benefit-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .benefit-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        /* Kontakt Section */
+        .kontakt {
+            padding: 80px 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            text-align: center;
+        }
+
+        .kontakt h2 {
+            color: var(--white);
+            margin-bottom: 2rem;
+        }
+
+        .kontakt-btn {
+            display: inline-block;
+            background: var(--white);
+            color: var(--primary-color);
+            padding: 1.2rem 3rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .kontakt-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: var(--white);
+            margin: 10% auto;
+            padding: 3rem;
+            border-radius: 15px;
+            max-width: 500px;
+            position: relative;
+            animation: slideIn 0.3s ease;
+            box-shadow: var(--shadow-lg);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close {
+            color: var(--text-light);
+            float: right;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: var(--text-dark);
+        }
+
+        .modal-content h3 {
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+
+        .kontakt-info {
+            margin: 1.5rem 0;
+        }
+
+        .kontakt-info p {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--bg-light);
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .kontakt-info strong {
+            color: var(--primary-color);
+            min-width: 80px;
+        }
+
+        .kontakt-info a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .kontakt-info a:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-dark);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .pakete-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .modal-content {
+                margin: 20% 1rem;
+                padding: 2rem;
+            }
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="logo">ComUnity</a>
+            <ul class="nav-links">
+                <li><a href="#zielgruppe">Für wen?</a></li>
+                <li><a href="#pakete">Angebote</a></li>
+                <li><a href="#workflow">Zusammenarbeit</a></li>
+                <li><a href="#warum">Warum wir?</a></li>
+                <li><a href="#kontakt" class="cta-btn">Kontakt</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-container">
+            <h1>SDR Team Aufbau & Vertriebsführung</h1>
+            <p class="subtitle">Professionelle Outbound-Expertise für nachhaltiges Wachstum</p>
+            <a href="#kontakt" class="hero-cta">Jetzt Beratung anfragen</a>
+        </div>
+    </section>
+
+    <!-- Zielgruppe Section -->
+    <section class="zielgruppe" id="zielgruppe">
+        <div class="container">
+            <h2 class="section-title">Für wen ist das relevant?</h2>
+            <p class="section-subtitle">Sie sind hier richtig, wenn eine dieser Situationen auf Sie zutrifft</p>
+            
+            <div class="checkmark-list">
+                <div class="checkmark-item">
+                    Sie möchten ein internes SDR Team aufbauen, wissen aber nicht, wo Sie anfangen sollen
+                </div>
+                <div class="checkmark-item">
+                    Ihr bestehendes Vertriebsteam benötigt Führung und strategische Steuerung
+                </div>
+                <div class="checkmark-item">
+                    Sie wollen Outbound systematisch professionalisieren
+                </div>
+                <div class="checkmark-item">
+                    Sie können oder wollen keine Vollzeit-Vertriebsleitung einstellen
+                </div>
+                <div class="checkmark-item">
+                    Sie brauchen jemanden, der weiß, wie man SDRs wirklich zum Erfolg führt
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pakete Section -->
+    <section class="pakete" id="pakete">
+        <div class="container">
+            <h2 class="section-title">Unsere Angebote</h2>
+            <p class="section-subtitle">Maßgeschneiderte Lösungen für Ihren Vertriebserfolg</p>
+            
+            <div class="pakete-grid">
+                <!-- Paket 1 -->
+                <div class="paket-card">
+                    <div class="paket-header">
+                        <h3>Internes SDR Team Aufbau</h3>
+                        <p>Für Unternehmen, die ein funktionierendes Outbound Team von Grund auf aufbauen wollen</p>
+                    </div>
+                    <div class="paket-body">
+                        <div class="paket-section">
+                            <h4>Was Sie bekommen</h4>
+                            <p>Ein komplett aufgebautes, einsatzbereites SDR Team, das intern weiterläuft – ohne dass Sie dauerhaft auf externe Unterstützung angewiesen sind.</p>
+                        </div>
+
+                        <div class="paket-section">
+                            <h4>Leistungsumfang</h4>
+                            <ul class="paket-list">
+                                <li><strong>Strategische Grundlagen:</strong> Zielgruppen- und Funnel-Analyse, SDR-Profil definieren</li>
+                                <li><strong>Recruiting & Auswahl:</strong> Durchführung des kompletten Recruiting-Prozesses und Kandidatenauswahl</li>
+                                <li><strong>Onboarding & Training:</strong> SDR Onboarding, Training zu Outbound Messaging, Telefonleitfäden und Einwandbehandlung</li>
+                                <li><strong>Technische Infrastruktur:</strong> HubSpot Setup für Outbound, Termin-Funnel entwickeln</li>
+                                <li><strong>Nachhaltiger Erfolg:</strong> Call Coaching, KPI-Struktur erstellen, vollständige Dokumentation und Übergabe</li>
+                            </ul>
+                        </div>
+
+                        <div class="paket-highlight">
+                            <strong>Das Ergebnis:</strong>
+                            Sie erhalten ein voll funktionsfähiges SDR Team mit klaren Prozessen, dokumentierten Arbeitsabläufen und allem, was Sie brauchen, um langfristig erfolgreich zu sein – komplett intern betrieben.
+                        </div>
+
+                        <div class="paket-highlight">
+                            <strong>Wichtig:</strong>
+                            Dies ist ein reines Aufbauprojekt. Wir arbeiten nicht dauerhaft in Ihrem Unternehmen, sondern bauen etwas auf, das Sie intern weiterführen.
+                        </div>
+
+                        <a href="#kontakt" class="paket-cta">Angebot einholen</a>
+                    </div>
+                </div>
+
+                <!-- Paket 2 -->
+                <div class="paket-card">
+                    <div class="paket-header">
+                        <h3>Fractional Head of Sales</h3>
+                        <p>Für Unternehmen mit bestehendem Team, die professionelle Vertriebsführung brauchen</p>
+                    </div>
+                    <div class="paket-body">
+                        <div class="paket-section">
+                            <h4>Was Sie bekommen</h4>
+                            <p>Eine erfahrene Vertriebsführungskraft in Teilzeit, die Ihre gesamte Vertriebsarchitektur steuert – ohne Vollzeitkosten, mit maximaler Expertise.</p>
+                        </div>
+
+                        <div class="paket-section">
+                            <h4>Leistungsumfang</h4>
+                            <ul class="paket-list">
+                                <li><strong>Strategische Führung:</strong> Sales-Strategie entwickeln und umsetzen, Führung des bestehenden SDR Teams</li>
+                                <li><strong>Prozessexzellenz:</strong> Prozessaufbau und kontinuierliche Prozessverbesserung</li>
+                                <li><strong>Pipeline Management:</strong> Pipeline-Steuerung, KPI-Reporting, präzises Forecasting</li>
+                                <li><strong>Team-Entwicklung:</strong> Coaching der SDRs, Outbound-Struktur optimieren</li>
+                                <li><strong>Operative Steuerung:</strong> HubSpot Pipeline führen, Steuerung operativer und strategischer Maßnahmen</li>
+                            </ul>
+                        </div>
+
+                        <div class="paket-highlight">
+                            <strong>Das Ergebnis:</strong>
+                            Effektive Vertriebsführung auf Senior-Level – ohne Vollzeitstelle, ohne hohe Fixkosten, mit der Erfahrung aus hunderten gesteuerten Projekten.
+                        </div>
+
+                        <div class="paket-highlight">
+                            <strong>Wichtig:</strong>
+                            Dieses Paket beinhaltet kein Recruiting und keinen Aufbau eines SDR Teams. Wir führen das Team, das bereits existiert. Wir sind Ihre Vertriebsleitung – kein SDR und keine externe Call-Leistung.
+                        </div>
+
+                        <a href="#kontakt" class="paket-cta">Angebot einholen</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vergleich Section -->
+    <section class="vergleich" id="vergleich">
+        <div class="container">
+            <h2 class="section-title">Der Unterschied auf einen Blick</h2>
+            
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Team Aufbau</th>
+                            <th>Vertriebsführung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Wofür?</td>
+                            <td>Team von Grund auf aufbauen</td>
+                            <td>Bestehendes Team führen</td>
+                        </tr>
+                        <tr>
+                            <td>Dauer</td>
+                            <td>Projekt (6-12 Wochen)</td>
+                            <td>Laufende Zusammenarbeit</td>
+                        </tr>
+                        <tr>
+                            <td>Ergebnis</td>
+                            <td>Funktionierendes internes Team</td>
+                            <td>Professionelle Vertriebssteuerung</td>
+                        </tr>
+                        <tr>
+                            <td>Sie haben</td>
+                            <td>Kein oder unvollständiges Team</td>
+                            <td>Ein Team, das Führung braucht</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Workflow Section -->
+    <section class="workflow" id="workflow">
+        <div class="container">
+            <h2 class="section-title">Wie wir zusammenarbeiten können</h2>
+            
+            <div class="workflow-steps">
+                <div class="workflow-step">
+                    <div class="workflow-number">1</div>
+                    <h4>Option 1</h4>
+                    <p>Sie starten ohne Team → Wir bauen Ihr SDR Team auf</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-number">2</div>
+                    <h4>Option 2</h4>
+                    <p>Sie haben bereits ein Team → Wir übernehmen die Führung</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-number">3</div>
+                    <h4>Option 3</h4>
+                    <p>Kombination beider zeitlich versetzt → Erst aufbauen, dann professionell führen lassen</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Warum Section -->
+    <section class="warum" id="warum">
+        <div class="container">
+            <h2 class="section-title">Warum mit uns arbeiten?</h2>
+            
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">💼</div>
+                    <h4>Praktische Erfahrung</h4>
+                    <p>Als erfahrene Team- und Projektleiter führen wir durchgehend 10-15 aktive Outbound-Projekte gleichzeitig. Wir kennen die Herausforderungen aus der täglichen Praxis.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">⚙️</div>
+                    <h4>Bewährte Systeme</h4>
+                    <p>Wir bringen erprobte Prozesse, Strukturen und Best Practices mit, die in der Realität funktionieren – nicht nur in der Theorie.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🎯</div>
+                    <h4>Nachhaltige Lösungen</h4>
+                    <p>Ob Aufbau oder Führung – Sie bekommen Systeme, die langfristig funktionieren und Ihr Unternehmen unabhängig machen.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🚀</div>
+                    <h4>Pragmatisch & Umsetzungsstark</h4>
+                    <p>Keine endlosen Konzepte, sondern klare Handlungsschritte und messbare Ergebnisse.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kontakt Section -->
+    <section class="kontakt" id="kontakt">
+        <div class="container">
+            <h2>Nächster Schritt</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem;">Lassen Sie uns in einem unverbindlichen Gespräch klären, welches Paket für Ihre Situation am besten passt und wie wir Ihren Vertrieb auf das nächste Level bringen.</p>
+            <a href="#" class="kontakt-btn" id="kontaktBtn">Kontakt aufnehmen</a>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div id="kontaktModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Kontaktieren Sie uns</h3>
+            <div class="kontakt-info">
+                <p>
+                    <strong>Mail:</strong>
+                    <a href="mailto:ComUnityDE@outlook.de">ComUnityDE@outlook.de</a>
+                </p>
+                <p>
+                    <strong>Mobile:</strong>
+                    <a href="tel:+4917766944375">+49 177 6694375</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 ComUnity. Alle Rechte vorbehalten.</p>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Modal functionality
+        const modal = document.getElementById('kontaktModal');
+        const kontaktBtns = document.querySelectorAll('#kontaktBtn, .paket-cta, .hero-cta, .cta-btn');
+        const span = document.getElementsByClassName('close')[0];
+
+        kontaktBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                modal.style.display = 'block';
+            });
+        });
+
+        span.onclick = function() {
+            modal.style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && !this.classList.contains('paket-cta') && !this.id === 'kontaktBtn') {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
